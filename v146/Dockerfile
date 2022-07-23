@@ -1,4 +1,4 @@
-FROM debian:buster
+FROM ubuntu:20.04
 
 # Install Prerequisite Packages
 RUN apt-get update && apt-get install -y \
@@ -9,8 +9,8 @@ RUN apt-get update && apt-get install -y \
     gcc \
     gfortran \
     grace \
-    libboost-numpy-dev \
-    libboost-python-dev \
+    libboost-numpy1.67-dev \
+    libboost-python1.67-dev \
     libopenblas-dev \
     make \
     python3 \
