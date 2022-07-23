@@ -29,7 +29,7 @@ RUN python3 setup.py install --noprompt
 
 # Cleanup
 WORKDIR /tmp
-RUN rm rm -rf aster-full-src-14.6.0
+RUN rm -rf aster-full-src-14.6.0
 
 # Setup Folder for Volume Mount
 RUN mkdir /analysis
