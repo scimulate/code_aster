@@ -6,9 +6,9 @@ docker pull scimulate/code_aster:XX.Xy
 
 Where XX.Xy is the version number. Currently supported version numbers include:
 
-+14.6
-+14.6p (Work in Progress)
-+15.3
++ 14.6
++ 14.6p (Work in Progress)
++ 15.3
 
 Navigate to the host directory which contains code_aster files (mesh, setup, etc.).
 
