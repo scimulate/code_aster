@@ -24,6 +24,12 @@ RUN apt-get update && apt-get install -y \
     swig \
     libsuperlu-dev
 
+WORKDIR /tmp
+RUN wget https://www.code-aster.org/FICHIERS/aster-full-src-14.6.0-1.noarch.tar.gz
+RUN tar xzvf aster*
+WORKDIR /tmp/aster-full-src-14.6.0
+RUN python3 setup.py install --noprompt
+
 # Compile OpenBLAS
 WORKDIR /tmp
 RUN wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.2.20.tar.gz

@@ -19,12 +19,12 @@ RUN apt-get update && apt-get install -y \
     tk \
     wget \
     zlib1g-dev
-    
+
 # Download, Extract, & Compile Source Code
 WORKDIR /tmp
-RUN wget https://www.code-aster.org/FICHIERS/aster-full-src-14.6.0-1.noarch.tar.gz
+RUN wget https://www.code-aster.org/FICHIERS/aster-full-src-15.2.0-1.noarch.tar.gz
 RUN tar xzvf aster*
-WORKDIR /tmp/aster-full-src-14.6.0
+WORKDIR /tmp/aster-full-src-15.2.0
 RUN python3 setup.py install --noprompt
 
 # Cleanup
