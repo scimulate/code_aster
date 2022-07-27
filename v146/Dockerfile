@@ -27,10 +27,6 @@ RUN tar xzvf aster*
 WORKDIR /tmp/aster-full-src-14.6.0
 RUN python3 setup.py install --noprompt
 
-# Cleanup
-WORKDIR /tmp
-RUN rm -rf *
-
 # Setup Folder for Volume Mount
 RUN mkdir /analysis
 WORKDIR /analysis

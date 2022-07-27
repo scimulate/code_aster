@@ -24,19 +24,21 @@ RUN apt-get update && apt-get install -y \
     swig \
     libsuperlu-dev
 
+# Download, Extract code_aster Source Code
 WORKDIR /tmp
 RUN wget https://www.code-aster.org/FICHIERS/aster-full-src-14.6.0-1.noarch.tar.gz
 RUN tar xzvf aster*
 WORKDIR /tmp/aster-full-src-14.6.0
-RUN python3 setup.py install --noprompt
 
-# Compile OpenBLAS
+# Step 1: Compile OpenBLAS
 WORKDIR /tmp
 RUN wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.2.20.tar.gz
 RUN tar xzvf v0.2.20.tar.gz
 WORKDIR /tmp/OpenBLAS-0.2.20
-RUN make TARGET=NEHALEM
-RUN make NO_AFFINITY=1 USE_OPENMP=1
+#RUN make TARGET=NEHALEM
+RUN make TARGET=HASWELL NO_AFFINITY=1 USE_OPENMP=1
 RUN make PREFIX=/opt/OpenBLAS install
-RUN echo /opt/OpenBLAS/lib | sudo tee -a /etc/ld.so.conf.d/openblas.conf
-RUN ldconfig
+#RUN echo /opt/OpenBLAS/lib | sudo tee -a /etc/ld.so.conf.d/openblas.conf
+#RUN ldconfig
+
+cd OpenBLAS-0.3.9 &&     make TARGET=CORE2 DYNAMIC_ARCH=1 DYNAMIC_OLDER=1 USE_THREAD=0 USE_OPENMP=0 FC=gfortran CC=gcc COMMON_OPT="-O3 -g -fPIC" FCOMMON_OPT="-O3 -g -fPIC -frecursive" NMAX="NUM_THREADS=128" LIBPREFIX="libopenblas" LAPACKE="NO_LAPACKE=1" INTERFACE64=0 NO_STATIC=1 &&     make -j4 PREFIX=/usr NO_STATIC=1 install &&     cd .. && rm -rf OpenBLAS-0.3.9 && rm v0.3.9.tar.gz # buildkit
