@@ -1,4 +1,5 @@
-FROM ubuntu:20.04
+#FROM ubuntu:20.04
+FROM debian:buster
 
 # Install Prerequisite Packages
 RUN apt-get update && apt-get install -y \
