@@ -4,7 +4,7 @@ With Docker installed, this container can be setup using the following command.
 docker pull scimulate/code_aster:XX.Xy
 ```
 
-Where XX.Xy is the version number. Currently supported version numbers include:
+Where XX.X(y) is the version number. Currently supported version numbers include:
 
 + 14.6
 + 14.6p (in progress)
@@ -21,7 +21,7 @@ Run the following commands to enable GUI applications and start the container.
 
 ```
 xhost +local:docker
-docker run --rm -it --env="DISPLAY" --net=host -v "$(pwd)":/analysis scimulate/code_aster:XX.Xy
+docker run --rm -it --env="DISPLAY" --net=host -v "$(pwd)":/analysis scimulate/code_aster:XX.X(y)
 ```
 
 The flag `-v "$(pwd)":/analysis` will mount the present working directory (pwd) to a dedicated folder in the container `/analysis`. This allows for seamless file read/write between the host and container. Next, start ASTK.
