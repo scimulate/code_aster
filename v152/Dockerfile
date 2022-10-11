@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y \
 
 # Download, Extract, & Compile Source Code
 WORKDIR /tmp
-RUN wget --no-check-certificate https://www.code-aster.org/FICHIERS/aster-full-src-15.2.0-1.noarch.tar.gz
+RUN wget https://code-aster.org/FICHIERS/aster-full-src-15.2.0-1.noarch.tar.gz
 RUN tar xzvf aster*
 WORKDIR /tmp/aster-full-src-15.2.0
 RUN python3 setup.py install --noprompt
