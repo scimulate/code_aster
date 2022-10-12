@@ -1,19 +1,52 @@
-FROM scimulate/code_aster:14.6
+#FROM scimulate/code_aster:14.6
+FROM ubuntu:18.04
+LABEL maintainer "Samuel Jacobs <samjacobs@scimulate.com>"
 
 # Install Prerequisites
+RUN apt-get update && apt-get install -y \
+    bison \
+    cmake \
+    flex \
+    g++ \
+    gcc \
+    gfortran \
+    grace \
+    libboost-numpy1.65-dev \
+    libboost-python1.65-dev \
+    libopenblas-dev \
+    make \
+    python3 \
+    python3-dev \
+    python3-numpy \
+    tk \
+    wget \
+    zlib1g-dev
+    
+# Download, Extract, & Compile Source Code
+WORKDIR /tmp
+RUN wget https://code-aster.org/FICHIERS/aster-full-src-14.6.0-1.noarch.tar.gz
+RUN tar xzvf aster*
+WORKDIR /tmp/aster-full-src-14.6.0
+
+ENV LANG C.UTF-8
+RUN python3 setup.py install --noprompt
+
+#sudo apt-get install  gfortran g++ python-dev python-numpy liblapack-dev libblas-dev tcl tk zlib1g-dev bison flex checkinstall openmpi-bin libx11-dev cmake grace gettext libboost-all-dev swig
+
 # Source: https://hitoricae.com/2020/10/31/code_aster-14-6-parallel-version-with-petsc/
 
 # Source: https://github.com/FIPE-System/code_aster-paralell_installlation
 
 # Step 1: Compile OpenBLAS
-WORKDIR /tmp
-RUN wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.2.20.tar.gz
-RUN tar xzvf v0.2.20.tar.gz
-WORKDIR /tmp/OpenBLAS-0.2.20
-RUN make NO_AFFINITY=1 USE_OPENMP=1
-RUN make PREFIX=/opt/OpenBLAS install
+#WORKDIR /tmp
+#RUN wget https://github.com/xianyi/OpenBLAS/archive/refs/tags/v0.2.20.tar.gz
+#RUN tar xzvf v0.2.20.tar.gz
+#WORKDIR /tmp/OpenBLAS-0.2.20
+#RUN make DYNAMIC_ARCH=1 NO_AFFINITY=1 USE_OPENMP=1 NUM_THREADS=32 && \
+#    make PREFIX=/opt/OpenBLAS install
 
-
+#make DYNAMIC_ARCH=1 NO_AFFINITY=1 NUM_THREADS=32 \
+#make install
 
 #RUN make TARGET=NEHALEM
 #RUN make TARGET=HASWELL NO_AFFINITY=1 USE_OPENMP=1
