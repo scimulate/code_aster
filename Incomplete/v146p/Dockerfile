@@ -34,7 +34,7 @@ ENV LANG C.UTF-8
 RUN python3 setup.py install --noprompt
 
 RUN apt-get update && apt-get install -y \
-    libscalapack-mpi-dev \
+    libscalapack-*-dev \
     libparmetis-dev \
     libptscotch-dev \
     libmumps-dev \
@@ -47,12 +47,13 @@ WORKDIR /tmp/aster-full-src-14.6.0/SRC
 RUN tar xzvf aster*
 WORKDIR /tmp/aster-full-src-14.6.0/SRC/aster-14.6.0
 
-COPY docker_std.py
-COPY docker_mpi.py
+COPY docker_std.py /tmp/aster-full-src-14.6.0/SRC/aster-14.6.0/wafcfg
+COPY docker_mpi.py /tmp/aster-full-src-14.6.0/SRC/aster-14.6.0/wafcfg
 
+RUN export PYTHONPATH=/opt/aster/lib/python3.6/site-packages/:$PYTHONPATH && \
+    ./waf configure --use-config-dir=/opt/aster/14.6/share/aster --use-config=docker_std --prefix=/opt/aster/14.6p && \
+    ./waf install -p --jobs=1
 
-
-#RUN ./waf configure --use-config-dir=/opt/aster/14.6/share/aster --use-config=linux_mpi --prefix=/opt/aster/14.6p
 
 #RUN ./waf configure --use-config-dir=/opt/aster/14.6/share/aster --use-config=linux_mpi --prefix=/opt/aster/14.6p
 #RUN ./waf install -p --jobs=1
