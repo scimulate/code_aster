@@ -28,8 +28,34 @@ RUN wget https://code-aster.org/FICHIERS/aster-full-src-14.6.0-1.noarch.tar.gz
 RUN tar xzvf aster*
 WORKDIR /tmp/aster-full-src-14.6.0
 
+RUN sed -i "s:PREFER_COMPILER\ =\ 'GNU':PREFER_COMPILER\ =\'GNU_without_MATH'\nMATHLIB=\ '/usr/lib/x86_64-linux-gnu/libopenblas.a':g" setup.cfg
+
 ENV LANG C.UTF-8
 RUN python3 setup.py install --noprompt
+
+RUN apt-get update && apt-get install -y \
+    libscalapack-mpi-dev \
+    libparmetis-dev \
+    libptscotch-dev \
+    libmumps-dev \
+    libpetsc*dev \
+    libsuperlu-dev
+
+RUN apt-get install -y nano
+
+WORKDIR /tmp/aster-full-src-14.6.0/SRC
+RUN tar xzvf aster*
+WORKDIR /tmp/aster-full-src-14.6.0/SRC/aster-14.6.0
+
+COPY docker_std.py
+COPY docker_mpi.py
+
+
+
+#RUN ./waf configure --use-config-dir=/opt/aster/14.6/share/aster --use-config=linux_mpi --prefix=/opt/aster/14.6p
+
+#RUN ./waf configure --use-config-dir=/opt/aster/14.6/share/aster --use-config=linux_mpi --prefix=/opt/aster/14.6p
+#RUN ./waf install -p --jobs=1
 
 #sudo apt-get install  gfortran g++ python-dev python-numpy liblapack-dev libblas-dev tcl tk zlib1g-dev bison flex checkinstall openmpi-bin libx11-dev cmake grace gettext libboost-all-dev swig
 
