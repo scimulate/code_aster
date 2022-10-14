@@ -51,8 +51,8 @@ COPY docker_std.py /tmp/aster-full-src-14.6.0/SRC/aster-14.6.0/wafcfg
 COPY docker_mpi.py /tmp/aster-full-src-14.6.0/SRC/aster-14.6.0/wafcfg
 
 RUN export PYTHONPATH=/opt/aster/lib/python3.6/site-packages/:$PYTHONPATH && \
-    ./waf configure --use-config-dir=/opt/aster/14.6/share/aster --use-config=docker_std --prefix=/opt/aster/14.6p && \
-    ./waf install -p --jobs=1
+    ./waf_mpi configure --use-config=docker_mpi --prefix=/opt/aster/14.6p #&& \
+#    ./waf install -p
 
 
 #RUN ./waf configure --use-config-dir=/opt/aster/14.6/share/aster --use-config=linux_mpi --prefix=/opt/aster/14.6p
