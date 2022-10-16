@@ -1,4 +1,5 @@
 FROM ubuntu:18.04
+LABEL maintainer "Samuel Jacobs <samjacobs@scimulate.com>"
 
 # Install Prerequisite Packages
 RUN apt-get update && apt-get install -y \
@@ -25,6 +26,8 @@ WORKDIR /tmp
 RUN wget https://code-aster.org/FICHIERS/aster-full-src-14.6.0-1.noarch.tar.gz
 RUN tar xzvf aster*
 WORKDIR /tmp/aster-full-src-14.6.0
+
+RUN pwd
 
 ENV LANG C.UTF-8
 RUN python3 setup.py install --noprompt

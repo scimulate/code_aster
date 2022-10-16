@@ -53,7 +53,7 @@ def configure(self):
         '/opt/aster/public/metis-5.1.0/lib',
         '/opt/aster/public/mumps-5.1.2/lib',
         '/opt/aster/public/scotch-6.0.4/lib',
-        '/opt/aster/public/tfel-3.2.1/lib',
+        #'/opt/aster/public/tfel-3.2.1/lib',
     ])
 
     self.env.append_value('INCLUDES', [
@@ -62,7 +62,7 @@ def configure(self):
         '/opt/aster/public/metis-5.1.0/include',
         '/opt/aster/public/mumps-5.1.2/include',
         '/opt/aster/public/scotch-6.0.4/include',
-        '/opt/aster/public/tfel-3.2.1/include',
+        #'/opt/aster/public/tfel-3.2.1/include',
     ])
 
     self.env.append_value('LIB', ('pthread', 'util'))

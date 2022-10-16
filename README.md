@@ -17,7 +17,7 @@ Navigate to the host directory which contains code_aster files (mesh, setup, etc
 cd /your_project_path
 ```
 
-Run the following commands to enable GUI applications and start the container.
+Run the following commands to enable GUI applications and start the container. Be sure to replace the sample tag "XX.X(y)" with any supported version number (14.6, 15.2, etc.).
 
 ```
 xhost +local:docker

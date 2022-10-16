@@ -1,47 +1,11 @@
-#FROM scimulate/code_aster:14.6
-FROM ubuntu:18.04
+FROM scimulate/code_aster:14.6
 LABEL maintainer "Samuel Jacobs <samjacobs@scimulate.com>"
 
-# Install Prerequisites
-RUN apt-get update && apt-get install -y \
-    bison \
-    cmake \
-    flex \
-    g++ \
-    gcc \
-    gfortran \
-    grace \
-    libboost-numpy1.65-dev \
-    libboost-python1.65-dev \
-    libopenblas-dev \
-    make \
-    python3 \
-    python3-dev \
-    python3-numpy \
-    tk \
-    wget \
-    zlib1g-dev
-    
-# Download, Extract, & Compile Source Code
-WORKDIR /tmp
-RUN wget https://code-aster.org/FICHIERS/aster-full-src-14.6.0-1.noarch.tar.gz
-RUN tar xzvf aster*
+# Remove base installation. Reinstall with GNU_without_MATH
+RUN rm -rf /opt/aster
 WORKDIR /tmp/aster-full-src-14.6.0
-
 RUN sed -i "s:PREFER_COMPILER\ =\ 'GNU':PREFER_COMPILER\ =\'GNU_without_MATH'\nMATHLIB=\ '/usr/lib/x86_64-linux-gnu/libopenblas.a':g" setup.cfg
-
-ENV LANG C.UTF-8
 RUN python3 setup.py install --noprompt
-
-RUN apt-get update && apt-get install -y \
-    libscalapack-*-dev \
-    libparmetis-dev \
-    libptscotch-dev \
-    libmumps-dev \
-    libpetsc*dev \
-    libsuperlu-dev
-
-RUN apt-get install -y nano
 
 WORKDIR /tmp/aster-full-src-14.6.0/SRC
 RUN tar xzvf aster*
@@ -50,9 +14,83 @@ WORKDIR /tmp/aster-full-src-14.6.0/SRC/aster-14.6.0
 COPY docker_std.py /tmp/aster-full-src-14.6.0/SRC/aster-14.6.0/wafcfg
 COPY docker_mpi.py /tmp/aster-full-src-14.6.0/SRC/aster-14.6.0/wafcfg
 
+RUN apt-get update && apt-get install -y \
+    libblacs* \
+    libmumps* \
+    libparmetis* \
+    libscalapack* \
+    libpetsc* \
+    libptscotch* \
+    libsuperlu*
+    
+    #RUN apt-get update && apt-get install -y \
+#    libscalapack-*-dev \
+#    libparmetis-dev \
+#    libptscotch-dev \
+#    libmumps-dev \
+#    libpetsc*dev \
+#    libsuperlu-dev
+
 RUN export PYTHONPATH=/opt/aster/lib/python3.6/site-packages/:$PYTHONPATH && \
     ./waf_mpi configure --use-config=docker_mpi --prefix=/opt/aster/14.6p #&& \
-#    ./waf install -p
+    #./waf install -p
+
+
+
+
+
+
+
+
+
+
+#RUN apt-get update && apt-get install -y *blacs*
+
+
+    
+#RUN apt-get update && apt-get install -y \
+#    *blacs*dev
+    
+#RUN export PYTHONPATH=/opt/aster/lib/python3.6/site-packages/:$PYTHONPATH && \
+#    ./waf_mpi configure --use-config=docker_mpi --prefix=/opt/aster/14.6p && \
+#    ./waf_mpi install -p
+
+# Install Prerequisites
+#RUN apt-get update && apt-get install -y \
+#    bison \
+#    cmake \
+#    flex \
+#    g++ \
+#    gcc \
+#    gfortran \
+#    grace \
+#    libboost-numpy1.65-dev \
+#    libboost-python1.65-dev \
+#    libopenblas-dev \
+#    make \
+#    python3 \
+#    python3-dev \
+#    python3-numpy \
+#    tk \
+#    wget \
+#    zlib1g-dev
+    
+# Download, Extract, & Compile Source Code
+#WORKDIR /tmp
+#RUN wget https://code-aster.org/FICHIERS/aster-full-src-14.6.0-1.noarch.tar.gz
+#RUN tar xzvf aster*
+#WORKDIR /tmp/aster-full-src-14.6.0
+
+#R
+
+#ENV LANG C.UTF-8
+#RUN python3 setup.py install --noprompt
+
+
+
+#RUN apt-get install -y nano
+
+
 
 
 #RUN ./waf configure --use-config-dir=/opt/aster/14.6/share/aster --use-config=linux_mpi --prefix=/opt/aster/14.6p

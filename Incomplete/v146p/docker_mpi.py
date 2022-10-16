@@ -37,6 +37,8 @@ def configure(self):
     self.env['ADDMEM'] = 500
 
     self.env.prepend_value('LIBPATH', [
+        '/usr/lib',
+        '/usr/lib/x86_64-linux-gnu',
         '/usr/lib/petsc',
         #YAMMROOT + '/prerequisites/Parmetis_aster-403_aster3/lib',
         #YAMMROOT + '/prerequisites/Scotch_aster-604_aster7/MPI/lib',
@@ -45,6 +47,8 @@ def configure(self):
     ])
 
     self.env.prepend_value('INCLUDES', [
+        'usr/include',
+        '/usr/include/x86_64-linux-gnu/',
         'usr/include/petsc',
         #YAMMROOT + '/prerequisites/Parmetis_aster-403_aster3/include',
         #YAMMROOT + '/prerequisites/Scotch_aster-604_aster7/MPI/include',
@@ -52,6 +56,26 @@ def configure(self):
         #YAMMROOT + '/prerequisites/Petsc_mpi-394_aster/include',
     ])
 
+    self.env.append_value('LIB', ('X11',))
+
+    opts.parallel = True
+
+'''
+    opts.enable_mumps  = True
+    opts.mumps_version = '5.1.2'
+    opts.mumps_libs = 'dmumps zmumps smumps cmumps mumps_common pord metis scalapack openblas esmumps scotch scotcherr'
+#    opts.embed_mumps = True
+
     opts.enable_petsc = True
+    opts.petsc_libs='petsc HYPRE ml'
+#    opts.petsc_libs='petsc'
+#    opts.embed_petsc = True
+
+#    opts.enable_parmetis  = True
     self.env.append_value('LIB_METIS', ('parmetis'))
-    self.env.append_value('LIB_SCOTCH', ('ptscotch','ptscotcherr','ptscotcherrexit'))
+    self.env.append_value('LIB_SCOTCH', ('ptscotch','ptscotcherr','ptscotcherrexit','ptesmumps'))
+'''
+
+#    opts.enable_petsc = True
+#    self.env.append_value('LIB_METIS', ('parmetis'))
+#    self.env.append_value('LIB_SCOTCH', ('ptscotch','ptscotcherr','ptscotcherrexit'))
