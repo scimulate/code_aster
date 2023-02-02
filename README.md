@@ -21,7 +21,7 @@ Run the following commands to enable GUI applications and start the container. B
 
 ```
 xhost +local:docker
-docker run --rm -it --env="DISPLAY" --net=host -v "$(pwd)":/analysis scimulate/code_aster:XX.X(y)
+docker run --rm -it --env="DISPLAY" --net=host -v "$(pwd)":/analysis:Z scimulate/code_aster:XX.X(y)
 ```
 
 The flag `-v "$(pwd)":/analysis` will mount the present working directory (pwd) to a dedicated folder in the container `/analysis`. This allows for seamless file read/write between the host and container. Next, start ASTK.
