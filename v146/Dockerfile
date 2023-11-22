@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 LABEL maintainer "Samuel Jacobs <samjacobs@scimulate.com>"
 
 # Install Prerequisite Packages
@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y \
     gcc \
     gfortran \
     grace \
-    libboost-numpy1.65-dev \
-    libboost-python1.65-dev \
+    libboost-numpy1.67-dev \
+    libboost-python1.67-dev \
     libopenblas-dev \
     make \
     python3 \
@@ -20,7 +20,7 @@ RUN apt-get update && apt-get install -y \
     tk \
     wget \
     zlib1g-dev
-    
+
 # Download, Extract, & Compile Source Code
 WORKDIR /tmp
 RUN wget https://code-aster.org/FICHIERS/aster-full-src-14.6.0-1.noarch.tar.gz
